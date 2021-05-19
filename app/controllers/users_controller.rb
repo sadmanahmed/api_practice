@@ -41,7 +41,20 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      # if User.find(params[:id]) != nil
+      #   @user = User.find(params[:id])
+      # else
+      #   flash[:notice] = "Id not found"
+      #   render json: @user
+      # end
+      demo_user = User.find(params[:id]) rescue nil
+      # render status: :created
+      if demo_user.nil?
+        render json: { message: 'ID not found' }
+
+      else
+        @user = demo_user
+      end
     end
 
     # Only allow a list of trusted parameters through.
